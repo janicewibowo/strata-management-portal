@@ -2,12 +2,7 @@
     "version": 2,
     "buildCommand": "npm run build",
     "outputDirectory": ".next",
-    "regions": ["syd1"],
-    "cron": [
-      {
-        "path": "/api/daily-reminder",
-        "schedule": "0 9 * * *"
-      }
-    ]
+    "regions": ["syd1"]
   }
+  
   

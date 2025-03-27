@@ -1,24 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
 
 export default function AnnouncementsPage() {
-  const [announcements, setAnnouncements] = useState([]);
-
-  useEffect(() => {
-    fetch('/data/announcements.json')
-      .then((res) => res.json())
-      .then(setAnnouncements);
-  }, []);
-
   return (
-    <main style={{ padding: '2rem' }}>
-      <h1>📢 Announcements</h1>
+    <main>
+      <h1>Announcements</h1>
       <ul>
-        {announcements.map((item, index) => (
-          <li key={index}>
-            <strong>{item.date}</strong>: {item.message}
-          </li>
-        ))}
+        <li>🚧 Lift maintenance this Friday at 9AM</li>
+        <li>📅 Annual General Meeting – April 15, 6PM</li>
+        <li>💡 Lighting upgrade planned for next week</li>
       </ul>
     </main>
   );
