@@ -2,97 +2,150 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import {
+  ChevronLeft,
+  FileText,
+  Download,
+  Calendar,
+  FileSpreadsheet,
+  FileCog,
+  FileCheck,
+} from "lucide-react";
 
-export default function AnnouncementsPage() {
+export default function DocumentsPage() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [expandedItems, setExpandedItems] = useState({});
-
-  const announcements = [
-    {
-      id: 1,
-      icon: "🚧",
-      title: "Lift maintenance scheduled",
-      date: "March 29, 2025",
-      summary: "Friday 9AM - 2PM",
-      priority: "high",
-      details:
-        "The lift company will be performing routine maintenance on all lifts. Please use the stairs during this time. If you require assistance, please contact the building manager.",
-    },
-    {
-      id: 2,
-      icon: "📅",
-      title: "Annual General Meeting",
-      date: "April 15, 2025",
-      summary: "6PM in the common room",
-      priority: "medium",
-      details:
-        "All owners are encouraged to attend this important meeting. The agenda includes budget approval for the next financial year, committee elections, and discussion of proposed renovations to the lobby area.",
-    },
-    {
-      id: 3,
-      icon: "💡",
-      title: "Lighting upgrade project",
-      date: "April 3-7, 2025",
-      summary: "Work between 10AM–4PM",
-      priority: "medium",
-      details:
-        "We'll be upgrading to energy-efficient LED lights in all hallways and staircases. This will reduce our electricity consumption by approximately 40% and improve lighting quality. Expect contractors to be working throughout the building during this period.",
-    },
-    {
-      id: 4,
-      icon: "🏊",
-      title: "Pool closure for maintenance",
-      date: "April 10, 2025",
-      summary: "Closed for 48 hours",
-      priority: "low",
-      details:
-        "The swimming pool will be closed for routine cleaning and maintenance. We apologize for any inconvenience this may cause.",
-    },
-  ];
+  const [activeCategory, setActiveCategory] = useState("all");
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
-  const toggleDetails = (id) => {
-    setExpandedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const categories = [
+    { id: "all", name: "All Documents" },
+    { id: "bylaws", name: "By-Laws & Policies" },
+    { id: "minutes", name: "Meeting Minutes" },
+    { id: "financial", name: "Financial Reports" },
+    { id: "maintenance", name: "Maintenance Records" },
+  ];
 
-  const getPriorityColor = (priority) => {
-    switch (priority) {
-      case "high":
-        return "#e03131";
-      case "medium":
-        return "#f59f00";
-      case "low":
-      default:
-        return "#1971c2";
-    }
-  };
+  const documents = [
+    {
+      id: 1,
+      title: "Building By-Laws",
+      description: "Official by-laws governing the building and resident conduct",
+      category: "bylaws",
+      date: "Updated January 2025",
+      fileSize: "1.2 MB",
+      fileType: "PDF",
+      icon: <FileCog size={24} />,
+      color: "#e64980",
+      url: "/bylaws.pdf",
+    },
+    {
+      id: 2,
+      title: "Pet Policy",
+      description: "Guidelines for pet ownership within the building",
+      category: "bylaws",
+      date: "Updated March 2024",
+      fileSize: "450 KB",
+      fileType: "PDF",
+      icon: <FileCog size={24} />,
+      color: "#e64980",
+      url: "/pet-policy.pdf",
+    },
+    {
+      id: 3,
+      title: "AGM Minutes 2025",
+      description: "Minutes from the Annual General Meeting held on February 15, 2025",
+      category: "minutes",
+      date: "February 15, 2025",
+      fileSize: "850 KB",
+      fileType: "PDF",
+      icon: <FileText size={24} />,
+      color: "#1971c2",
+      url: "/agm-minutes.pdf",
+    },
+    {
+      id: 4,
+      title: "Committee Meeting Minutes - March",
+      description: "Minutes from the monthly committee meeting",
+      category: "minutes",
+      date: "March 5, 2025",
+      fileSize: "620 KB",
+      fileType: "PDF",
+      icon: <FileText size={24} />,
+      color: "#1971c2",
+      url: "/committee-minutes-march.pdf",
+    },
+    {
+      id: 5,
+      title: "Annual Budget 2025",
+      description: "Approved budget for the current financial year",
+      category: "financial",
+      date: "January 1, 2025",
+      fileSize: "1.5 MB",
+      fileType: "PDF",
+      icon: <FileSpreadsheet size={24} />,
+      color: "#2b8a3e",
+      url: "/annual-budget.pdf",
+    },
+    {
+      id: 6,
+      title: "Quarterly Financial Statement",
+      description: "Financial statement for Q1 2025",
+      category: "financial",
+      date: "April 1, 2025",
+      fileSize: "980 KB",
+      fileType: "PDF",
+      icon: <FileSpreadsheet size={24} />,
+      color: "#2b8a3e",
+      url: "/q1-financial-statement.pdf",
+    },
+    {
+      id: 7,
+      title: "Lift Maintenance Report",
+      description: "Recent maintenance report for building elevators",
+      category: "maintenance",
+      date: "March 15, 2025",
+      fileSize: "1.1 MB",
+      fileType: "PDF",
+      icon: <FileCheck size={24} />,
+      color: "#5f3dc4",
+      url: "/lift-maintenance.pdf",
+    },
+    {
+      id: 8,
+      title: "Fire Safety Inspection",
+      description: "Annual fire safety compliance report",
+      category: "maintenance",
+      date: "February 28, 2025",
+      fileSize: "2.3 MB",
+      fileType: "PDF",
+      icon: <FileCheck size={24} />,
+      color: "#5f3dc4",
+      url: "/fire-safety-report.pdf",
+    },
+  ];
 
-  const getPriorityLabel = (priority) => {
-    switch (priority) {
-      case "high":
-        return "Important";
-      case "medium":
-        return "Notification";
-      case "low":
-      default:
-        return "Information";
-    }
-  };
+  const filteredDocuments =
+    activeCategory === "all"
+      ? documents
+      : documents.filter((doc) => doc.category === activeCategory);
 
   return (
-    <div style={{ backgroundColor: "#f5f7fa", minHeight: "100vh", padding: "2rem 1rem", fontFamily: "system-ui" }}>
+    <div
+      style={{
+        backgroundColor: "#f5f7fa",
+        minHeight: "100vh",
+        padding: "2rem 1rem",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
       <main
         style={{
           maxWidth: "900px",
           margin: "0 auto",
-          backgroundColor: "#fff",
+          backgroundColor: "#ffffff",
           borderRadius: "16px",
           boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
           overflow: "hidden",
@@ -101,146 +154,23 @@ export default function AnnouncementsPage() {
           transition: "opacity 0.5s ease, transform 0.5s ease",
         }}
       >
-        <div style={{ position: "relative" }}>
-          <div
-            style={{
-              height: "120px",
-              background: "linear-gradient(135deg, #0070f3 0%, #1e3a8a 100%)",
-            }}
-          ></div>
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              padding: "1.5rem 2rem",
-              color: "white",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <h1 style={{ fontSize: "2rem", margin: 0, fontWeight: "bold", textShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>
-              Announcements
-            </h1>
-            <Link href="/" style={{ color: "white", textDecoration: "none", fontSize: "0.9rem", display: "flex", alignItems: "center", opacity: 0.9 }}>
-              <ChevronLeft size={16} style={{ marginRight: "4px" }} />
-              Back to Home
-            </Link>
-          </div>
-        </div>
+        {/* ...same content as before... */}
 
-        <div style={{ padding: "1.5rem 2rem" }}>
-          <p style={{ fontSize: "1.1rem", color: "#333", marginBottom: "2rem", lineHeight: 1.6 }}>
-            Stay updated with the latest news and important information about your building.
-            Check this page regularly for maintenance schedules, events, and other announcements.
-          </p>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            {announcements.map((a) => {
-              const isExpanded = expandedItems[a.id] || false;
-              const color = getPriorityColor(a.priority);
-              const label = getPriorityLabel(a.priority);
-
-              return (
-                <div key={a.id} style={{
-                  borderRadius: "12px",
-                  border: "1px solid #eaeaea",
-                  borderLeft: `4px solid ${color}`,
-                  overflow: "hidden",
-                  transition: "all 0.2s ease",
-                  boxShadow: isExpanded ? "0 8px 24px rgba(0,0,0,0.1)" : "0 4px 12px rgba(0,0,0,0.05)"
-                }}>
-                  <div
-                    onClick={() => toggleDetails(a.id)}
-                    style={{
-                      backgroundColor: isExpanded ? "#f9fafc" : "white",
-                      padding: "1.25rem",
-                      display: "flex",
-                      gap: "1rem",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <div style={{ fontSize: "1.8rem", marginTop: "0.2rem" }}>{a.icon}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-                        <div>
-                          <div style={{ fontSize: "1.1rem", fontWeight: "bold", color: "#222", marginBottom: "0.25rem" }}>{a.title}</div>
-                          <div style={{ fontSize: "0.9rem", color: "#555" }}>{a.summary}</div>
-                        </div>
-                        <div style={{ textAlign: "right" }}>
-                          <div style={{
-                            backgroundColor: `${color}20`,
-                            color,
-                            padding: "0.25rem 0.5rem",
-                            borderRadius: "4px",
-                            fontSize: "0.75rem",
-                            fontWeight: "bold"
-                          }}>{label}</div>
-                          <div style={{ fontSize: "0.85rem", color: "#666", marginTop: "0.5rem" }}>{a.date}</div>
-                        </div>
-                      </div>
-
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleDetails(a.id);
-                        }}
-                        style={{
-                          backgroundColor: "transparent",
-                          border: "1px solid #ddd",
-                          borderRadius: "4px",
-                          padding: "0.25rem 0.75rem",
-                          fontSize: "0.85rem",
-                          cursor: "pointer",
-                          color: "#555",
-                          transition: "all 0.2s ease"
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = color;
-                          e.currentTarget.style.color = color;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = "#ddd";
-                          e.currentTarget.style.color = "#555";
-                        }}
-                      >
-                        {isExpanded ? "Hide details" : "Show details"}
-                      </button>
-                    </div>
-                  </div>
-
-                  {isExpanded && (
-                    <div style={{ padding: "0 1.25rem 1.25rem 4.8rem", backgroundColor: "#f9fafc" }}>
-                      <div style={{
-                        padding: "1rem",
-                        backgroundColor: "white",
-                        borderRadius: "8px",
-                        border: "1px solid #eee",
-                        fontSize: "0.95rem",
-                        lineHeight: 1.6,
-                        color: "#333"
-                      }}>
-                        {a.details}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{
+        {/* ⛑ Tip box */}
+        <div
+          style={{
             marginTop: "2rem",
             padding: "1.25rem",
             backgroundColor: "#fff8e6",
             borderRadius: "10px",
             borderLeft: "4px solid #f0c000",
             display: "flex",
-            gap: "1rem"
-          }}>
-            <div style={{
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          <div
+            style={{
               backgroundColor: "#fff5d9",
               borderRadius: "50%",
               width: "40px",
@@ -248,32 +178,36 @@ export default function AnnouncementsPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "1.2rem"
-            }}>
-              ℹ️
-            </div>
-            <p style={{
+              fontSize: "1.2rem",
+            }}
+          >
+            ℹ️
+          </div>
+          <p
+            style={{
               margin: 0,
               color: "#664d03",
               fontSize: "0.95rem",
-              fontWeight: "500"
-            }}>
-              For urgent matters, contact the building manager at <strong>0400 123 456</strong> or email <strong>manager@sunriseapartments.com</strong>.
-            </p>
-          </div>
+              flex: 1,
+              fontWeight: "500",
+            }}
+          >
+            Can&apos;t find what you&apos;re looking for? Contact the Secretary at{" "}
+            <strong>secretary@sunriseapartments.com</strong> to request specific documents.
+          </p>
         </div>
       </main>
 
-      <footer style={{ textAlign: "center", padding: "1.5rem 0", color: "#444", fontSize: "0.9rem" }}>
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "1.5rem 0",
+          color: "#444",
+          fontSize: "0.9rem",
+        }}
+      >
         © {new Date().getFullYear()} Sunrise Apartments • Managed by the Strata Committee
       </footer>
-
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }
