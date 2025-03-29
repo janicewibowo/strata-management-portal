@@ -318,41 +318,6 @@ export default function HomePage() {
               the building manager directly.
             </p>
           </div>
-
-          <div
-            style={{
-              marginTop: "2.5rem",
-              textAlign: "center",
-              padding: "1rem 0",
-              borderTop: "1px solid #eaeaea",
-            }}
-          >
-            <button
-              style={{
-                backgroundColor: "#0070f3",
-                color: "white",
-                border: "none",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "8px",
-                fontSize: "1rem",
-                fontWeight: "bold",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                boxShadow: "0 4px 14px rgba(0, 112, 243, 0.25)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#005cc5"
-                e.currentTarget.style.transform = "translateY(-2px)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#0070f3"
-                e.currentTarget.style.transform = "translateY(0)"
-              }}
-              onClick={() => (window.location.href = "/login")}
-            >
-              Resident Login
-            </button>
-          </div>
         </div>
       </main>
 
